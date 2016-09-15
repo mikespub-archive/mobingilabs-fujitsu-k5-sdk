@@ -14,7 +14,7 @@ $response = $authInfo->response;
 $response = json_decode($response);
 
 
-$groupClient = new Role();
+$roleClient = new Role();
 
 //list of all groups
-echo $groupClient->getRoles($authInfo->token, $response->token->project->domain->id);
+echo $roleClient->getRoles($authInfo->token, $response->token->project->domain->id);

@@ -2,10 +2,14 @@
 A PHP SDK Library for Fujitsu K5 Cloud http://www.fujitsu.com/global/solutions/cloud/k5/
 
 
-> This project is still under development.
+__This project is still under development.__
 
 
-Sample usage:
+#### Installation
+
+`composer require mobingilabs/k5-php-client`
+
+#### Sample usage:
 
 ```php
 <?php
