@@ -1,0 +1,21 @@
+{
+    "name": "mobingilabs/k5-php-client",
+    "description": "Fujitsu K5 PHP SDK Client Library",
+    "type": "library",
+    "require": {
+        "php": ">=5.5"
+    },
+    "license": "apache",
+    "authors": [
+        {
+            "name": "Mobingi Labs",
+            "email": "wayland@mobingi.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "K5": "src/"
+        }
+    }
+}
