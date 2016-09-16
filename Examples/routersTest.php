@@ -30,3 +30,8 @@ $routerClient->createRouter(
 //delete a router
 die();
 $routerClient->deleteRouter('jp-east-1', 'af8de4d8-b2d8-4018-9ddb-35110624e65c');
+
+
+//..
+//more functions can be found at \K5\Networking\Router.php
+//..

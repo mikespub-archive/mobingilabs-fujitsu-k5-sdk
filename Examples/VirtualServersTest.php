@@ -2,9 +2,16 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use K5\Compute\Keypair;
 use K5\Compute\VirtualServer;
 
 require 'setAccountTest.php';
+
+
+$keypairClient = new Keypair(K5_USERNAME,K5_PASSWORD,K5_CONTRACT,false);
+
+//get all OS keypairs
+echo $keypairClient->getKeypairs('jp-east-1');
 
 
 $vmClient = new VirtualServer(K5_USERNAME,K5_PASSWORD,K5_CONTRACT,false);
