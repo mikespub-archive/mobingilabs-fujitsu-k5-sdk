@@ -104,6 +104,39 @@ class SecurityGroup extends Auth
 
 
     /**
+     * Get Security Group Rules Detail
+     *
+     * https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/security-group-rules/{security_group_rule_id}
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $security_group_rule_id
+     *
+     * @region specific
+     *
+     * @\K5\Networking\SecurityGroup\getSecurityGroupRules()
+     *
+     * @return string
+     */
+    public function getSecurityGroupRulesDetail($region, $security_group_rule_id){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X GET https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/security-group-rules/'.$security_group_rule_id.' \
+    	-H "Content-Type: application/json" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
+
+
+    /**
      * Create A Security Group
      *
      * https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/security-groups
