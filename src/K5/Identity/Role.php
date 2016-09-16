@@ -2,8 +2,9 @@
 
 namespace K5\Identity;
 
+use K5\Token\Auth;
 
-class Role
+class Role extends Auth
 {
 
     /**
@@ -18,12 +19,14 @@ class Role
      *
      * @return string
      */
-    public static function getRoles($token, $domain_id){
+    public function getRoles(){
+
+        $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X GET https://identity.cloud.global.fujitsu.com/v3/roles?domain_id='. $domain_id .' \
+        curl -X GET https://identity.cloud.global.fujitsu.com/v3/roles?domain_id='. $Auth['domain_id'] .' \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = shell_exec($c);

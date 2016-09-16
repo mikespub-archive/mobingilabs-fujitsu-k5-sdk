@@ -2,8 +2,9 @@
 
 namespace K5\Identity;
 
+use K5\Token\Auth;
 
-class Project
+class Project extends Auth
 {
 
     /**
@@ -18,12 +19,14 @@ class Project
      *
      * @return string
      */
-    public static function getProjects($token, $domain_id){
+    public function getProjects(){
+
+        $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X GET https://identity.cloud.global.fujitsu.com/v3/projects?domain_id='. $domain_id .' \
+        curl -X GET https://identity.cloud.global.fujitsu.com/v3/projects?domain_id='. $Auth['domain_id'] .' \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = shell_exec($c);
@@ -46,12 +49,14 @@ class Project
      *
      * @region global
      */
-    public static function createProject($token, $domain_id, $name, $description){
+    public function createProject($name, $description){
+
+        $Auth = Auth::getAuthToken();
 
         $data = array(
             'project'=>array(
                 'description' => $description,
-                'domain_id' => $domain_id,
+                'domain_id' => $Auth['domain_id'],
                 'name' => $name
             )
         );
@@ -60,7 +65,7 @@ class Project
         $c = '\
         curl -X POST https://identity.cloud.global.fujitsu.com/v3/projects \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['domain_id'] .'" \
         -d \''. $data .'\' \
         ';
 

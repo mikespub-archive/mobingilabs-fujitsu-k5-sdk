@@ -2,8 +2,9 @@
 
 namespace K5\Compute;
 
+use K5\Token\Auth;
 
-class VM
+class VirtualServer extends Auth
 {
 
     /**
@@ -20,12 +21,14 @@ class VM
      *
      * @return string
      */
-    public static function getVirtualServers($token, $region, $project_id){
+    public function getVirtualServers($region){
+
+        $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X GET https://compute.' .$region. '.cloud.global.fujitsu.com/v2/' .$project_id. '/servers \
+        curl -X GET https://compute.' .$region. '.cloud.global.fujitsu.com/v2/' .$Auth['project_id']. '/servers \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = exec($c);
@@ -51,12 +54,14 @@ class VM
      *
      * @return string
      */
-    public static function getServerInfo($token, $region, $project_id, $server_id){
+    public function getServerInfo($region, $server_id){
+
+        $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X GET https://compute.' .$region. '.cloud.global.fujitsu.com/v2/' .$project_id. '/servers/' .$server_id. ' \
+        curl -X GET https://compute.' .$region. '.cloud.global.fujitsu.com/v2/' .$Auth['project_id']. '/servers/' .$server_id. ' \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = exec($c);
@@ -82,7 +87,9 @@ class VM
      *
      * @return string
      */
-    public static function createServers($token,$region,$data){
+    public function createServers($region,$data){
+
+        $Auth = Auth::getAuthToken();
 
         // $data in json format corresponding to the following array:
         //
@@ -121,9 +128,9 @@ class VM
         // $data = json_encode($data, JSON_HEX_QUOT);
 
         $c = '\
-        curl -X POST https://compute.' .$region. '.cloud.global.fujitsu.com/v2/' .$project_id. '/servers \
+        curl -X POST https://compute.' .$region. '.cloud.global.fujitsu.com/v2/' .$Auth['project_id']. '/servers \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         -d \''. $data .'\' \
         ';
 
@@ -150,12 +157,14 @@ class VM
      * @return string
      *
      */
-    public static function deleteServer($token,$region,$server_id){
+    public function deleteServer($region, $server_id){
+
+        $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X DELETE https://compute.' .$region. '.cloud.global.fujitsu.com/v2/' .$project_id. '/servers/' .$server_id. ' \
+        curl -X DELETE https://compute.' .$region. '.cloud.global.fujitsu.com/v2/' .$Auth['project_id']. '/servers/' .$server_id. ' \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = exec($c);

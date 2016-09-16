@@ -2,8 +2,9 @@
 
 namespace K5\Networking;
 
+use K5\Token\Auth;
 
-class Network
+class Network extends Auth
 {
 
     /**
@@ -20,12 +21,14 @@ class Network
      *
      * @return string
      */
-    public static function getNetworks($token, $region){
+    public function getNetworks($region){
+
+        $Auth = Auth::getAuthToken();
 
         $c = '\
         curl -X GET https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/networks \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = exec($c);
@@ -51,12 +54,14 @@ class Network
      *
      * @return string
      */
-    public static function getNetworksDetail($token, $region, $network_id){
+    public function getNetworksDetail($region, $network_id){
+
+        $Auth = Auth::getAuthToken();
 
         $c = '\
         curl -X GET https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/networks/'.$network_id.' \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = exec($c);

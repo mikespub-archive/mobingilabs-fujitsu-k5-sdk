@@ -1,5 +1,5 @@
 # k5-php-sdk
-A PHP SDK Library for Fujitsu K5 Cloud http://www.fujitsu.com/global/solutions/cloud/k5/
+A PHP SDK Library for Fujitsu K5 Cloud http://jp.fujitsu.com/solutions/cloud/k5/index.html
 
 
 __This project is still under development.__
@@ -16,35 +16,20 @@ __This project is still under development.__
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use K5\Token\Auth;
-use K5\Identity\Role;
-use K5\Networking\Router;
-use K5\Compute\VM;
+use K5\Networking\Network;
 
+require 'setAccountTest.php'; //setup your K5 credentials here
 
-require 'setAccountTest.php'; //Need to setup your K5 username, password & contract number
-
-
-$authInfo = json_decode($tokenClient->getAuthToken());
-
-$response = $authInfo->response;
-$response = json_decode($response);
-
-
-$roleClient = new Role();
-
-//list of all groups
-echo $roleClient->getRoles($authInfo->token, $response->token->project->domain->id);
+$networkClient = new Network(K5_USERNAME,K5_PASSWORD,K5_CONTRACT,false);
 
 
 //list of all networks under JP East 1 Region
-echo $routerClient->getRouters($authInfo->token, 'jp-east-1');
+echo $networkClient->getNetworks('jp-east-1');
 
+//Get details of a specific network
+//Replace '53bdc6d8-fff8-46e2-b88e-bd9adb633609' with your own network id
+echo $networkClient->getNetworksDetail('jp-east-1', '53bdc6d8-fff8-46e2-b88e-bd9adb633609');
 
-$vmClient = new VM();
-
-//list of all virtual servers under JP East 1 Region
-echo $vmClient->getVirtualServers($authInfo->token, 'jp-east-1', $response->token->project->id);
 
 ```
 

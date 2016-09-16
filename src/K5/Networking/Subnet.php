@@ -2,8 +2,9 @@
 
 namespace K5\Networking;
 
+use K5\Token\Auth;
 
-class Subnet
+class Subnet extends Auth
 {
 
     /**
@@ -20,12 +21,14 @@ class Subnet
      *
      * @return string
      */
-    public static function getSubnets($token, $region){
+    public function getSubnets($region){
+
+        $Auth = Auth::getAuthToken();
 
         $c = '\
         curl -X GET https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/subnets \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = exec($c);
@@ -51,12 +54,14 @@ class Subnet
      *
      * @return string
      */
-    public static function getSubnetsDetail($token, $region, $subnet_id){
+    public function getSubnetsDetail($region, $subnet_id){
+
+        $Auth = Auth::getAuthToken();
 
         $c = '\
         curl -X GET https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/subnets/'.$subnet_id.' \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = exec($c);
@@ -88,7 +93,9 @@ class Subnet
      *
      * @return string
      */
-    public static function createSubnet($token,$region,$name,$network_id,$cidr,$dns_nameservers,$ip_version,$gateway_ip,$az){
+    public function createSubnet($region,$name,$network_id,$cidr,$dns_nameservers,$ip_version,$gateway_ip,$az){
+
+        $Auth = Auth::getAuthToken();
 
         $data = array(
             'router'=>array(
@@ -107,7 +114,7 @@ class Subnet
         $c = '\
         curl -X POST https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/subnet \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         -d \''. $data .'\' \
         ';
 
@@ -134,13 +141,14 @@ class Subnet
      * @return string
      *
      */
-    public static function deleteSubnet($token,$region,$subnet_id){
+    public function deleteSubnet($region,$subnet_id){
 
+        $Auth = Auth::getAuthToken();
 
         $c = '\
         curl -X DELETE https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/subnet/'.$subnet_id.' \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = exec($c);

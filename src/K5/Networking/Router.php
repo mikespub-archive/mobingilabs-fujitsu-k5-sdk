@@ -2,8 +2,9 @@
 
 namespace K5\Networking;
 
+use K5\Token\Auth;
 
-class Router
+class Router extends Auth
 {
 
     /**
@@ -20,12 +21,14 @@ class Router
      *
      * @return string
      */
-    public static function getRouters($token, $region){
+    public function getRouters($region){
+
+        $Auth = Auth::getAuthToken();
 
         $c = '\
         curl -X GET https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/routers \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = exec($c);
@@ -51,12 +54,14 @@ class Router
      *
      * @return string
      */
-    public static function getRouterDetail($token, $region, $router_id){
+    public function getRouterDetail($region, $router_id){
+
+        $Auth = Auth::getAuthToken();
 
         $c = '\
         curl -X GET https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/routers/'.$router_id.' \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = exec($c);
@@ -83,7 +88,9 @@ class Router
      *
      * @return string
      */
-    public static function createRouter($token,$region,$az,$name){
+    public function createRouter($region,$az,$name){
+
+        $Auth = Auth::getAuthToken();
 
         $data = array(
             'router'=>array(
@@ -97,7 +104,7 @@ class Router
         $c = '\
         curl -X POST https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/routers \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         -d \''. $data .'\' \
         ';
 
@@ -124,13 +131,14 @@ class Router
      * @return string
      *
      */
-    public static function deleteRouter($token,$region,$router_id){
+    public function deleteRouter($region,$router_id){
 
+        $Auth = Auth::getAuthToken();
 
         $c = '\
         curl -X DELETE https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/routers/'.$router_id.' \
     	-H "Content-Type: application/json" \
-    	-H "X-Auth-Token: '. $token .'" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = exec($c);

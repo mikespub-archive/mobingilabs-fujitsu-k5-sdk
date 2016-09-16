@@ -38,7 +38,7 @@ class Auth
      *
      * @\K5\Token\Auth()
      *
-     * @return string
+     * @return array
      */
     public function getAuthToken()
     {
@@ -94,14 +94,33 @@ class Auth
 
         $return = json_decode($return, true);
 
-        return json_encode(array(
+        $project_id = $this->getProjectId(json_decode($data));
+        $domain_id = $this->getDomainId(json_decode($data));
+
+        return array(
             "token"=>$token,
+            "project_id"=>$project_id,
+            "domain_id"=>$domain_id,
             "response"=>$data
-        ));
+        );
 
 
     }
 
 
+
+    private function getProjectId($response){
+
+        return $response->token->project->id;
+
+    }
+
+
+
+    private function getDomainId($response){
+
+        return $response->token->project->domain->id;
+
+    }
 
 }

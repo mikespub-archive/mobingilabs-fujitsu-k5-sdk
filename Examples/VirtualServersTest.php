@@ -2,30 +2,23 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use K5\Token\Auth;
-use K5\Compute\VM;
+use K5\Compute\VirtualServer;
 
 require 'setAccountTest.php';
 
 
-$authInfo = json_decode($tokenClient->getAuthToken());
-
-$response = $authInfo->response;
-$response = json_decode($response);
-
-
-$vmClient = new VM();
+$vmClient = new VirtualServer(K5_USERNAME,K5_PASSWORD,K5_CONTRACT,false);
 
 //list of all virtual servers under JP East 1 Region
-echo $vmClient->getVirtualServers($authInfo->token, 'jp-east-1', $response->token->project->id);
+echo $vmClient->getVirtualServers('jp-east-1');
 
 //get server details
-echo $vmClient->getServerInfo($authInfo->token, 'jp-east-1', $response->token->project->id,'3e7f437e-1cd1-413a-bc7d-4d7bade93394');
+echo $vmClient->getServerInfo('jp-east-1', '3e7f437e-1cd1-413a-bc7d-4d7bade93394');
 
 
 //delete a server
 die();
-$vmClient->deleteServer($authInfo->token, 'jp-east-1', $response->token->project->id,'your-server-id');
+$vmClient->deleteServer('jp-east-1', '3e7f437e-1cd1-413a-bc7d-4d7bade93394');
 
 //creates a server
 $data = array(
@@ -62,4 +55,4 @@ $data = array(
 );
 $data = json_encode($data, JSON_HEX_QUOT);
 die();
-$vmClient->createServers($authInfo->token, 'jp-east-1', $response->token->project->id,$data);
+$vmClient->createServers('jp-east-1', $data);
