@@ -2,14 +2,14 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use K5\Network\Port;
+use K5\Networking\Port;
 
 require 'setAccountTest.php';
 
 $portClient = new Port(K5_USERNAME,K5_PASSWORD,K5_CONTRACT,false);
 
 //list of all groups
-echo $portClient->getPorts();
+echo $portClient->getPorts('jp-east-1');
 
 
 //create a port (a.k.a network interface)
