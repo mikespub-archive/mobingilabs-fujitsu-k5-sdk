@@ -149,4 +149,91 @@ class Router extends Auth
 
 
 
+    /**
+     * Attach router to a subnet (A.K.A add router interface)
+     * https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/routers/{router_id}/add_router_interface -X PUT
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $router_id            Router id to be modified
+     * @param $data                 See example
+     *
+     * @region specific
+     *
+     * @\K5\Networking\Router\attachRouterToSubnet()
+     *
+     * @return string
+     *
+     */
+    public function attachRouterToSubnet($region, $router_id, $data){
+
+        $Auth = Auth::getAuthToken();
+
+        // parameter structure example
+        // $data = array(
+        //     'subnet_id' => '' //the subnet id to be attached
+        // );
+        // $data = json_encode($data, JSON_HEX_QUOT);
+
+        $c = '\
+        curl -X PUT https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/routers/'.$router_id.'/add_router_interface \
+    	-H "Content-Type: application/json" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
+        ';
+
+        $respond = exec($c);
+
+        echo $respond;
+
+    }
+
+
+
+    /**
+     * Attach router to an external network
+     * https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/routers/{router_id} -X PUT
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $router_id            Router id to be modified
+     * @param $data                 See example
+     *
+     * @region specific
+     *
+     * @\K5\Networking\Router\attachRouterToExternalNetwork()
+     *
+     * @return string
+     *
+     */
+    public function attachRouterToExternalNetwork($region, $router_id, $data){
+
+        $Auth = Auth::getAuthToken();
+
+        // Sample $data structure
+        // $data = array(
+        //     'router'=>array(
+        //         'external_gateway_info' => array(
+        //             'network_id' => '' //the network id to be attached
+        //         )
+        //     )
+        // );
+        // $data = json_encode($data, JSON_HEX_QUOT);
+
+        $c = '\
+        curl -X PUT https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/routers/'.$router_id.' \
+    	-H "Content-Type: application/json" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
+        ';
+
+        $respond = exec($c);
+
+        echo $respond;
+
+    }
+
+
+
+
 }
