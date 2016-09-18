@@ -1,0 +1,60 @@
+heat_template_version: 2013-05-23
+
+description: >
+ Hello world HOT template that just defines a single server.
+ Contains just base features to verify base HOT support.
+
+parameters:
+ key_name:
+   type: string
+   description: Name of an existing key pair to use for the server
+   default: haruka_keypair
+ flavor:
+   type: string
+   description: Flavor for the server to be created
+   default: S-1
+ image:
+   type: string
+   description: Image ID or image name to use for the server
+   default: 58fd966f-b055-4cd0-9012-cf6af7a4c32b
+ az:
+   type: string
+   description: the availability zone
+   default: jp-east-1a
+ network:
+     type: string
+     description: network uuid
+     default: c3b7914e-8320-4c85-89fa-dac343c7d321
+ vm_name:
+     type: string
+     description: name of vm
+     default: mo-stack-machine0905
+ sg_name:
+     type: string
+     description: security group
+     default: 2e8dfe2d-2531-498e-8743-e97f5a9a7c11
+
+resources:
+ sys-vol:
+   type: OS::Cinder::Volume
+   properties:
+     name: ""
+     size: 30
+     volume_type: "M1"
+     availability_zone: { get_param: az }
+     image: { get_param: image }
+ server:
+   type: OS::Nova::Server
+   properties:
+     key_name: { get_param: key_name }
+     flavor: { get_param: flavor }
+     image: { get_param: image }
+     networks: ["uuid": {get_param: network} ]
+     name: { get_param: vm_name }
+     security_groups: [{ get_param: sg_name }]
+     block_device_mapping: [{"volume_size": "80", "volume_id": {get_resource: sys-vol}, "delete_on_termination": True, "device_name": "/dev/vda"}]
+
+outputs:
+ server_networks:
+   description: The networks of the deployed server
+   value: { get_attr: [server, networks] }
