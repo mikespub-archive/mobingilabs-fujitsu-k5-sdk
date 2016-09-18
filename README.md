@@ -7,7 +7,7 @@ __This project is still under development.__
 
 #### Installation
 
-`composer require mobingilabs/k5-php-client:dev-master`
+`composer require mobingilabs/fujitsu-k5-php-client:dev-master`
 
 #### Sample usage:
 

@@ -1,5 +1,5 @@
 {
-    "name": "mobingilabs/k5-php-client",
+    "name": "mobingilabs/fujitsu-k5-php-client",
     "description": "Fujitsu K5 PHP SDK Client Library",
     "type": "library",
     "require": {
@@ -9,7 +9,7 @@
     "authors": [
         {
             "name": "Mobingi Labs",
-            "email": "wayland@mobingi.com"
+            "email": "support@mobingi.com"
         }
     ],
     "autoload": {
