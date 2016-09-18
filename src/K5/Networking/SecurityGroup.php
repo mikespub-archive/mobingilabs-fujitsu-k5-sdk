@@ -114,7 +114,7 @@ class SecurityGroup extends Auth
      *
      * @region specific
      *
-     * @\K5\Networking\SecurityGroup\getSecurityGroupRules()
+     * @\K5\Networking\SecurityGroup\getSecurityGroupRulesDetail()
      *
      * @return string
      */
