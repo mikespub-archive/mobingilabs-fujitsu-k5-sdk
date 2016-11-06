@@ -105,4 +105,39 @@ class Network extends Auth
     }
 
 
+
+
+    /**
+     * Delete a Network against K5 API
+     *
+     * @see https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/networks
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     *
+     * @region specific
+     *
+     * @\K5\Networking\getNetworks()
+     *
+     * @return string
+     */
+    public function deleteNetwork($region, $data){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X DELETE https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/networks/'.$network_id.' \
+    	-H "Content-Type: application/json" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
+
+
+
 }
