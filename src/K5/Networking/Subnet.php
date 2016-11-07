@@ -133,7 +133,7 @@ class Subnet extends Auth
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X DELETE https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/subnet/'.$subnet_id.' \
+        curl -X DELETE https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/subnets/'.$subnet_id.' \
     	-H "Content-Type: application/json" \
     	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
