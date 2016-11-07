@@ -88,17 +88,9 @@ class Router extends Auth
      *
      * @return string
      */
-    public function createRouter($region,$az,$name){
+    public function createRouter($region,$data){
 
         $Auth = Auth::getAuthToken();
-
-        $data = array(
-            'router'=>array(
-                'availability_zone' => $az,
-                'name' => $name
-            )
-        );
-        $data = json_encode($data, JSON_HEX_QUOT);
 
 
         $c = '\
@@ -110,7 +102,7 @@ class Router extends Auth
 
         $respond = exec($c);
 
-        echo $respond;
+        return $respond;
 
     }
 

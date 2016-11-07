@@ -20,11 +20,12 @@ echo $routerClient->getRouterDetail('jp-east-1', '699781f2-995f-48dc-bcba-ab78fc
 
 //create a router
 die();
-$routerClient->createRouter(
-    'jp-east-1',
-    'jp-east-1a',
-    'My-test-router01'
-);
+$routerClient->createRouter('jp-east-1', json_encode(array(
+    'router'=>array(
+        'name' => 'step-router',
+        'availability_zone' => 'jp-east-1a'
+    )
+), JSON_HEX_QUOT));
 
 
 //delete a router
