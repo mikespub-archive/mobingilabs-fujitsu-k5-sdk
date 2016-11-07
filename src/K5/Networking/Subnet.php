@@ -99,7 +99,7 @@ class Subnet extends Auth
 
 
         $c = '\
-        curl -X POST https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/subnet \
+        curl -X POST https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/subnets \
     	-H "Content-Type: application/json" \
     	-H "X-Auth-Token: '. $Auth['token'] .'" \
         -d \''. $data .'\' \
