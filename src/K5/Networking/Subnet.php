@@ -93,22 +93,9 @@ class Subnet extends Auth
      *
      * @return string
      */
-    public function createSubnet($region,$name,$network_id,$cidr,$dns_nameservers,$ip_version,$gateway_ip,$az){
+    public function createSubnet($region, $data){
 
         $Auth = Auth::getAuthToken();
-
-        $data = array(
-            'router'=>array(
-                'name' => $name,
-                'network_id' => $network_id,
-                'cidr' => $cidr,
-                'dns_nameservers' => $dns_nameservers,
-                'ip_version' => $ip_version,
-                'gateway_ip' => $gateway_ip,
-                'availability_zone' => $az
-            )
-        );
-        $data = json_encode($data, JSON_HEX_QUOT);
 
 
         $c = '\
@@ -120,7 +107,7 @@ class Subnet extends Auth
 
         $respond = exec($c);
 
-        echo $respond;
+        return $respond;
 
     }
 
