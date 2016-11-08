@@ -90,7 +90,7 @@ class Firewall extends Auth
         $c = '\
         curl -X DELETE https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/fw/firewalls/'.$firewall_id.' \
         -H "Content-Type: application/json" \
-        -d \''. $data .'\' \
+        -H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
 
         $respond = exec($c);
