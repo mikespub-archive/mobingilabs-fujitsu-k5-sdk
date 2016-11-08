@@ -281,7 +281,7 @@ class Firewall extends Auth
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X POST https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/fw/firewall_rules/'.$fwrule_id.' \
+        curl -X PUT https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/fw/firewall_rules/'.$fwrule_id.' \
         -H "Content-Type: application/json" \
         -H "X-Auth-Token: '. $Auth['token'] .'" \
         -d \''. $data .'\' \
