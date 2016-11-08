@@ -71,7 +71,7 @@ class Keypair extends Auth
 
 
     /**
-     * Upload a keypair against K5 API
+     * Delete a keypair against K5 API
      *
      * https://compute.jp-east-1.cloud.global.fujitsu.com/v2.0/PROJECT_ID/os-keypairs
      *

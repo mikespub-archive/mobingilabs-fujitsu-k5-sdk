@@ -140,7 +140,7 @@ class Subnet extends Auth
 
         $respond = exec($c);
 
-        echo $respond;
+        return $respond;
 
     }
 

@@ -58,7 +58,39 @@ class FloatingIP extends Auth
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X GET https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/floatingips'. $ip. ' \
+        curl -X GET https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/floatingips/'. $ip. ' \
+    	-H "Content-Type: application/json" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
+
+
+    /**
+     * Release a Floating IP
+     *
+     * https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/floatingips/{ip_id}
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     *
+     * @region specific
+     *
+     * @\K5\Networking\FloatingIP\getFloatingIPsDetail()
+     *
+     * @return string
+     */
+    public function releaseFloatingIp($region, $ip){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X DELETE https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/floatingips/'. $ip. ' \
     	-H "Content-Type: application/json" \
     	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';

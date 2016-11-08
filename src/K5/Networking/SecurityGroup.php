@@ -72,6 +72,38 @@ class SecurityGroup extends Auth
 
 
     /**
+     * Delete a Security Group
+     *
+     * https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/security-groups
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     *
+     * @region specific
+     *
+     * @\K5\Networking\SecurityGroup\getSecurityGroupsDetail()
+     *
+     * @return string
+     */
+    public function deleteSecurityGroup($region, $security_group_id){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X DELETE https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/security-groups/'.$security_group_id.' \
+    	-H "Content-Type: application/json" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
+
+
+    /**
      * Get Security Group Rules
      *
      * https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/security-group-rules
@@ -170,6 +202,39 @@ class SecurityGroup extends Auth
 
 
     /**
+     * Delete a Security Group Rule
+     *
+     * https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/security-group-rules/{security_group_rule_id}
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $security_group_rule_id
+     *
+     * @region specific
+     *
+     * @\K5\Networking\SecurityGroup\getSecurityGroupRulesDetail()
+     *
+     * @return string
+     */
+    public function deleteSecurityGroupRule($region, $security_group_rule_id){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X DELETE https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/security-group-rules/'.$security_group_rule_id.' \
+    	-H "Content-Type: application/json" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
+
+
+    /**
      * Create A Security Group
      *
      * https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/security-groups
@@ -210,38 +275,6 @@ class SecurityGroup extends Auth
 
     }
 
-
-
-    /**
-     * Delete A Security Group
-     *
-     * https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/security-groups
-     *
-     * @param $token                Token used for HTTP request header authentication
-     * @param $region               Specify region
-     * @param $securitygroup_id
-     *
-     * @region specific
-     *
-     * @\K5\Networking\SecurityGroup\deleteSecurityGroups()
-     *
-     * @return string
-     */
-    public function deleteSecurityGroup($region, $securitygroup_id){
-
-        $Auth = Auth::getAuthToken();
-
-        $c = '\
-        curl -X DELETE https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/security-groups/'.$security_group_id.' \
-        -H "Content-Type: application/json" \
-        -H "X-Auth-Token: '. $Auth['token'] .'" \
-        ';
-
-        $respond = exec($c);
-
-        return $respond;
-
-    }
 
 
 

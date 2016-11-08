@@ -40,7 +40,7 @@ class Network extends Auth
 
 
     /**
-     * List All Networks against K5 API
+     * Get details of a Network against K5 API
      *
      * @see https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/networks
      *
