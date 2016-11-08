@@ -7,6 +7,37 @@ use K5\Token\Auth;
 class VirtualServer extends Auth
 {
 
+
+    /**
+     * Get Available Server Flavors
+     *
+     * @see https://compute.jp-east-1.cloud.global.fujitsu.com/v2/PROJECT_ID/servers
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     *
+     * @region specific
+     *
+     * @\K5\Compute\getVirtualServers()
+     *
+     * @return string
+     */
+    public function getServerFlavors($region){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X GET https://compute.' .$region. '.cloud.global.fujitsu.com/v2/' .$Auth['project_id']. '/flavors/detail \
+    	-H "Content-Type: application/json" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
     /**
      * List All Virtual Machines against K5 API
      *
