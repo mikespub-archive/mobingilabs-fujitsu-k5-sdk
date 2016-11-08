@@ -104,6 +104,39 @@ class VirtualServer extends Auth
 
 
     /**
+     * Retrieve server port ID, which is required for assigning global IP addresses to the virtual server
+     *
+     * @see https://compute.jp-east-1.cloud.global.fujitsu.com/v2/{PROJECT_ID}/servers/{SERVER_ID}
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $server_id            The server id to query
+     *
+     * @region specific
+     *
+     * @\K5\Networking\getServerInfo()
+     *
+     * @return string
+     */
+    public function getServerPort($region, $server_id){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X GET https://compute.' .$region. '.cloud.global.fujitsu.com/v2/' .$Auth['project_id']. '/servers/' .$server_id. '/os-interface \
+    	-H "Content-Type: application/json" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
+
+
+    /**
      * Create Virtual Machines
      *
      * https://compute.jp-east-1.cloud.global.fujitsu.com/v2/{PROJECT_ID}/servers/{SERVER_ID}
