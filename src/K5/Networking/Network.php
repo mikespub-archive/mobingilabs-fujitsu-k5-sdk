@@ -121,7 +121,7 @@ class Network extends Auth
      *
      * @return string
      */
-    public function deleteNetwork($region, $data){
+    public function deleteNetwork($region, $network_id){
 
         $Auth = Auth::getAuthToken();
 
