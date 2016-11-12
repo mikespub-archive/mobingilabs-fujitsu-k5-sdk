@@ -34,6 +34,33 @@ class Volume extends Auth
 
     }
 
+    /**
+     * Show details of a volume
+     *
+     * @see https://blockstorage.jp-east-1.cloud.global.fujitsu.com/v2/volumes/{volume_id}
+     *
+     * @param $region               Specify region
+     *
+     * @\K5\BlockStorage\getVolumes()
+     *
+     * @return string
+     */
+    public function getVolumeDetail($region, $volume_id){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X GET https://blockstorage.' .$region. '.cloud.global.fujitsu.com/v2/' .$Auth['project_id']. '/volumes/' .$volume_id. ' \
+    	-H "Content-Type: application/json" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
 
     /**
      * Create a volume (block storage)
