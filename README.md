@@ -7,7 +7,7 @@ __This project is still under development.__
 
 #### Installation
 
-`composer require mobingilabs/fujitsu-k5-php-client:dev-development`
+`composer require mobingilabs/fujitsu-k5-sdk:dev-development`
 
 For stable releases please check [releases](https://github.com/mobingilabs/fujitsu-k5-sdk/releases) section.
 
