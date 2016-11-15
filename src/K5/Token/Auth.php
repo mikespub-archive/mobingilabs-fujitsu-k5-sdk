@@ -50,7 +50,7 @@ class Auth
         curl -i -X "POST" "https://identity.'.$gls.'cloud.global.fujitsu.com/v3/auth/tokens" \
         	-H "Content-Type: application/json" \
         	-H "Accept: application/json" \
-        	-d $\'{
+        	-d \'{
               "auth": {
                 "identity": {
                   "methods": [
