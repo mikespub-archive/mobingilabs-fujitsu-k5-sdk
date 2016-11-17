@@ -222,4 +222,46 @@ class Port extends Auth
 
     }
 
+
+    /**
+     * Create a security group (network interface)
+     *
+     * https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/security-groups
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $data
+     *
+     * @region specific
+     *
+     * @\K5\Networking\Port\createSecurityGroup()
+     *
+     * @return string
+     */
+    public function createSecurityGroup($region, $data){
+
+        $Auth = Auth::getAuthToken();
+
+        //sample $data structure
+        // $data = array(
+        //     'security_group'=>array(
+        //         'name' => '',
+        //         'description' => ''
+        //     )
+        // );
+        // $data = json_encode($data, JSON_HEX_QUOT);
+
+        $c = '\
+        curl -X POST https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/security-groups \
+    	-H "Content-Type: application/json" \
+    	-H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
 }
