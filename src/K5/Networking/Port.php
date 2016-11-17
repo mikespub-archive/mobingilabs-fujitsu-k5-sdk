@@ -181,4 +181,45 @@ class Port extends Auth
     }
 
 
+    /**
+     * Update a Port (network interfaces)
+     *
+     * https://networking.jp-east-1.cloud.global.fujitsu.com/v2.0/ports
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+      * @param $data
+     *
+     * @region specific
+     *
+     * @\K5\Networking\Port\updatePort()
+     *
+     * @return string
+     */
+    public function updatePort($region, $port_id, $data){
+
+        $Auth = Auth::getAuthToken();
+
+        //sample $data structure
+        // $data = array(
+        //     'port'=>array(
+        //         'name' => '',
+        //         'admin_state_up' => ''
+        //     )
+        // );
+        // $data = json_encode($data, JSON_HEX_QUOT);
+
+        $c = '\
+        curl -X PUT https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/ports/'.$port_id.' \
+      -H "Content-Type: application/json" \
+      -H "X-Auth-Token: '. $Auth['token'] .'" \
+      -d \''. $data .'\' \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
 }
