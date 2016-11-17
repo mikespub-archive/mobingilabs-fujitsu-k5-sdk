@@ -164,12 +164,12 @@ class Port extends Auth
      *
      * @return string
      */
-    public function showPort($region){
+    public function showPort($region, $port_id){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X GET https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/ports \
+        curl -X GET https://networking.' .$region. '.cloud.global.fujitsu.com/v2.0/ports/'.$port_id.' \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
