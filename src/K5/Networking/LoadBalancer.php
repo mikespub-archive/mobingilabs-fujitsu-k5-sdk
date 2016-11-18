@@ -22,7 +22,7 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function getLoadBalancers($region ,$data){
+    public function getLoadBalancers($region){
 
         $Auth = Auth::getAuthToken();
 
