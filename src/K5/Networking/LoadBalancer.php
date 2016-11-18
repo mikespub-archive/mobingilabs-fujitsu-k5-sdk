@@ -26,18 +26,17 @@ class LoadBalancer extends Auth
 
         $Auth = Auth::getAuthToken();
 
-      //   $c = '\
-      //   curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancers \
-    	// -H "Content-Type: application/json" \
-    	// -H "X-Auth-Token: '. $Auth['token'] .'" \
-      //   ';
-
         $c = '\
-        curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/ \
+        curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancers \
     	-H "Content-Type: application/json" \
     	-H "X-Auth-Token: '. $Auth['token'] .'" \
-    	-d \''. $data .'\' \
         ';
+    //   $c = '\
+    //   curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancers \
+    // -H "Content-Type: application/json" \
+    // -H "X-Auth-Token: '. $Auth['token'] .'" \
+    // -d \''. $data .'\' \
+    //   ';
 
         $respond = exec($c);
 
@@ -47,10 +46,11 @@ class LoadBalancer extends Auth
 
 
     // /**
-    //  * describe LoadBalansers against K5 API
+    //  * create LoadBalanser against K5 API
     //  *
     //  * https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?LoadBalancerNames.member.1=MyLB01&Action=DescribeLoadBalancers
-    //  *https://loadbalancing.(リージョン名).cloud.global.fujitsu.com/? LoadBalancerName=MyLB01
+    //  *https://loadbalancing.(リージョン名).cloud.global.fujitsu.com/?
+    //  *LoadBalancerName=MyLB01
     //  *&Listeners.member.1.LoadBalancerPort=80
     //  *¥&Listeners.member.1.InstancePort=80
     //  *&Listeners.member.1.Protocol=http
@@ -66,18 +66,19 @@ class LoadBalancer extends Auth
     //  *
     //  * @region specific
     //  *
-    //  * @\K5\Networking\LoadBalancer\getLoadBalancers()
+    //  * @\K5\Networking\LoadBalancer\createLoadBalancer()
     //  *
     //  * @return string
     //  */
-    // public function getLoadBalancers($region){
+    // public function createLoadBalancer($region){
     //
     //     $Auth = Auth::getAuthToken();
     //
     //     $c = '\
-    //     curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancers \
+    //     curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=CreateLoadBalancer \
     // 	-H "Content-Type: application/json" \
     // 	-H "X-Auth-Token: '. $Auth['token'] .'" \
+    //   -d \''. $data .'\' \
     //     ';
     //
     //     $respond = exec($c);
