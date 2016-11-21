@@ -55,7 +55,7 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function createLoadBalancer($region, $loadblancername, $subnet, $Number){
+    public function createLoadBalancer($region, $loadblancername, $subnet, $number){
 
         $Auth = Auth::getAuthToken();
 
