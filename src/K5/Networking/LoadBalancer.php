@@ -55,14 +55,14 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function createLoadBalancer($region, $loadblancername, $subnet){
+    public function createLoadBalancer($region, $loadblancername, $subnet, $Number){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=CreateLoadBalancer
+          curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=CreateLoadBalancer
         &LoadBalancerName='.$loadblancername.'
-        &Subnets.member='.$subnet.' \
+        &Subnets.member.'.$number.'='.$subnet.'
     	-H "Content-Type: application/json" \
     	-H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
