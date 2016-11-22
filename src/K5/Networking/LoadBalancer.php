@@ -255,4 +255,38 @@ class LoadBalancer extends Auth
     }
 
 
+    /**
+     * Modify LoadBalancerAttributes K5 API
+     *
+     *https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?Action=ModifyLoadBalancerAttributes&LoadBalancerName=MyLB01&LoadBalancerAttributes.ConnectionSettings.IdleTimeout=30
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $loadbalanername      LoadBalancerName requred
+     * @param $idletimeout          IdleTimeout requred
+     *
+     * @region specific
+     *
+     * @\K5\Networking\LoadBalancer\modifyLoadBalancerAttribute()
+     *
+     * @return string
+     */
+    public function modifyLoadBalancerAttribute($region, $loadbalancername, $idletimeout){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X PUT https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=ModifyLoadBalancerAttributes
+        &LoadBalancerName='.$loadbalancername.'
+        &LoadBalancerAttributes.ConnectionSettings.IdleTimeout='.$idletimeout.' \
+      -H "Content-Type: application/json" \
+      -H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
 }
