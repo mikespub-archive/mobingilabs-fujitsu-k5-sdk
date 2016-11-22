@@ -93,18 +93,18 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function createLoadBalancerListener($region, $loadblancername, $subnet){
+    public function createLoadBalancerListener($region, $loadblancername, $subnet, $number){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
         curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=CreateLoadBalancerListeners
-        &LoadBalancerName='.$loadblancername.'
-        &Protocol='.$protocol.'
-        &LoadBalancerPort='.$loadbalancerport.'
-        &InstancePort='.$instaneport.'
-        &InstanceProtocol='.$instanceprotocol.'
-        &SSLCertificateId='.$sslcertificateid.' \
+        &Listeners.member.'.$number.'.LoadBalancerName='.$loadblancername.'
+        &Listeners.member.'.$number.'.Protocol='.$protocol.'
+        &Listeners.member.'.$number.'.LoadBalancerPort='.$loadbalancerport.'
+        &Listeners.member.'.$number.'.InstancePort='.$instaneport.'
+        &Listeners.member.'.$number.'.InstanceProtocol='.$instanceprotocol.'
+        &Listeners.member.'.$number.'.SSLCertificateId='.$sslcertificateid.' \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
