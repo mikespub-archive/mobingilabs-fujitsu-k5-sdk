@@ -192,8 +192,8 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName requred
-     * @param $instanceid           InstanceId requred
+     * @param $loadbalanername      LoadBalancerName require
+     * @param $instanceid           InstanceId require
      *
      * @region specific
      *
@@ -258,12 +258,12 @@ class LoadBalancer extends Auth
     /**
      * Modify LoadBalancerAttributes K5 API
      *
-     *https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?Action=ModifyLoadBalancerAttributes&LoadBalancerName=MyLB01&LoadBalancerAttributes.ConnectionSettings.IdleTimeout=30
+     * https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?Action=ModifyLoadBalancerAttributes&LoadBalancerName=MyLB01&LoadBalancerAttributes.ConnectionSettings.IdleTimeout=30
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName requred
-     * @param $idletimeout          IdleTimeout requred
+     * @param $loadbalanername      LoadBalancerName require
+     * @param $idletimeout          IdleTimeout require
      *
      * @region specific
      *
@@ -293,12 +293,12 @@ class LoadBalancer extends Auth
     /**
      * Register InstancesWithLoadBalancer K5 API
      *
-     *https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?Action=RegisterInstancesWithLoadBalancer&LoadBalancerName=MyLB01&Instances.member.1.InstanceId=i-315b7e51
+     * https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?Action=RegisterInstancesWithLoadBalancer&LoadBalancerName=MyLB01&Instances.member.1.InstanceId=i-315b7e51
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName requred
-     * @param $instanceid           InstanceId requred
+     * @param $loadbalanername      LoadBalancerName require
+     * @param $instanceid           InstanceId require
      *
      * @region specific
      *
@@ -323,5 +323,43 @@ class LoadBalancer extends Auth
         return $respond;
 
     }
+
+
+    /**
+     * Set LoadBalancerListenerSSLCertificate K5 API
+     *
+     * https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?Action=SetLoadBalancerListenerSSLCertificate&LoadBalancerName=MyLB01&SSLCertificateId=5c349f63-a874-47ed-b09e-9da913cbbbde&LoadBalancerPort=443
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $loadbalanername      LoadBalancerName require
+     * @param $sslcertificateid     SSLCertificateId require
+     * @param $loadbalancerport     LoadBalancerPort require
+     *
+     * @region specific
+     *
+     * @\K5\Networking\LoadBalancer\setLoadBalancerListenerSSLCertificate()
+     *
+     * @return string
+     */
+    public function setLoadBalancerListenerSSLCertificate($region, $loadbalancername, $sslcertificateid, $loadbalancerport){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X PUT https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=SetLoadBalancerListenerSSLCertificate
+        &LoadBalancerName='.$loadbalancername.'
+        &SSLCertificateId='.$sslcertificateid.'
+        &LoadBalancerPort='.$loadbalancerport.' \
+      -H "Content-Type: application/json" \
+      -H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
 
 }
