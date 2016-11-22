@@ -311,7 +311,7 @@ class LoadBalancer extends Auth
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X PUT https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=RegisterInstancesWithLoadBalancer
+        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=RegisterInstancesWithLoadBalancer
         &LoadBalancerName='.$loadbalancername.'
         &Instances.member.'.$number.'.InstanceId='.$instanceid.' \
       -H "Content-Type: application/json" \
