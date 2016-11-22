@@ -220,4 +220,39 @@ class LoadBalancer extends Auth
     }
 
 
+    /**
+     * Detach LoadBalancerFromSubnets K5 API
+     *
+     * https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?Action=DetachLoadBalancerFromSubnets&LoadBalancerName=MyLB01&Subnets.member.1=MySubnet-XXXXX
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $loadbalanername      LoadBalancerName requred
+     * @param $subnet               Subnets.member.x requred
+     *
+     * @region specific
+     *
+     * @\K5\Networking\LoadBalancer\detachLoadBalancerFromSubnet()
+     *
+     * @return string
+     */
+    public function detachLoadBalancerFromSubnet($region, $loadbalancername, $subnet, $number){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DetachLoadBalancerFromSubnets
+        &LoadBalancerName='.$loadbalancername.'
+        &Subnets.member.'.$number.'=MySubnet-'.$subnet.' \
+      -H "Content-Type: application/json" \
+      -H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
+
 }
