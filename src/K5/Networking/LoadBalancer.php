@@ -362,4 +362,41 @@ class LoadBalancer extends Auth
     }
 
 
+    /**
+     * Set LoadBalancerPoliciesOfListener K5 API
+     *
+     *https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?Action=SetLoadBalancerPoliciesOfListener&LoadBalancerName=MyLB01&PolicyNames.member.1=MyLoadBalancerCookiePolicy&LoadBalancerPort=80
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $loadbalanername      LoadBalancerName require
+     * @param $policynames          PolicyNames require
+     * @param $loadbalancerport     LoadBalancerPort require
+     *
+     * @region specific
+     *
+     * @\K5\Networking\LoadBalancer\setLoadBalancerPoliciesOfListener()
+     *
+     * @return string
+     */
+    public function setLoadBalancerPoliciesOfListener($region, $loadbalancername, $policynames, $loadbalancerport, $number){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X PUT https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=SetLoadBalancerPoliciesOfListener
+        &LoadBalancerName='.$loadbalancername.'
+        &PolicyNames.member.'.$number.'='.$policynames.'
+        &LoadBalancerPort='.$loadbalancerport.' \
+      -H "Content-Type: application/json" \
+      -H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
+
 }
