@@ -73,6 +73,7 @@ class LoadBalancer extends Auth
 
     }
 
+
     /**
      * create LoadBalancerListeners against K5 API
      *
@@ -173,6 +174,41 @@ class LoadBalancer extends Auth
         curl -X DELETE https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DeleteLoadBalancerListeners
         &LoadBalancerName='.$loadblancername.'
         &LoadBalancerPorts.member.'.$menber.'='.$loadbalancerport.' \
+      -H "Content-Type: application/json" \
+      -H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
+
+    /**
+     * Describe LoadBalancerAttributes K5 API
+     *
+     * https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?Action=DescribeLoadBalancerAttributes&LoadBalancerName=MyLB01&Instances.member.1.InstanceId=i-e3677ad7
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $loadbalanername      LoadBalancerName requred
+     * @param $instanceid           InstanceId requred
+     *
+     * @region specific
+     *
+     * @\K5\Networking\LoadBalancer\describeLoadBalancerAttribute()
+     *
+     * @return string
+     */
+    public function describeLoadBalancerAttribute($region, $loadbalancername, $instanceid, $number){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancerAttributes
+        &LoadBalancerName='.$loadbalancername.'
+        &Instances.member.'.$number.'.InstanceId='.$instanceid.' \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
         ';
