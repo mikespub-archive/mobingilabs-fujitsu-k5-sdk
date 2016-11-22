@@ -289,4 +289,39 @@ class LoadBalancer extends Auth
 
     }
 
+
+    /**
+     * Register InstancesWithLoadBalancer K5 API
+     *
+     *https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?Action=RegisterInstancesWithLoadBalancer&LoadBalancerName=MyLB01&Instances.member.1.InstanceId=i-315b7e51
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $loadbalanername      LoadBalancerName requred
+     * @param $instanceid           InstanceId requred
+     *
+     * @region specific
+     *
+     * @\K5\Networking\LoadBalancer\registerInstancesWithLoadBalancer()
+     *
+     * @return string
+     */
+    public function registerInstancesWithLoadBalancer($region, $loadbalancername, $instanceid, $number){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X PUT https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=RegisterInstancesWithLoadBalancer
+        &LoadBalancerName='.$loadbalancername.'
+        &Instances.member.'.$number.'.InstanceId='.$instanceid.' \
+      -H "Content-Type: application/json" \
+      -H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
 }
