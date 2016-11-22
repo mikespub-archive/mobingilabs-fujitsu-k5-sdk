@@ -148,4 +148,40 @@ class LoadBalancer extends Auth
 
     }
 
+
+    /**
+     * delete LoadBalancerListeners against K5 API
+     *
+     *https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?Action=DeleteLoadBalancerListeners&LoadBalancerName=MyLB01&LoadBalancerPorts.member.1=22
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $loadbalanername      LoadBalancerName require
+     * @param $LoadBalancerPort     LoadBalancerPort require
+     *
+     * @region specific
+     *
+     * @\K5\Networking\LoadBalancer\deleteLoadBalancerListener()
+     *
+     * @return string
+     */
+    public function deleteLoadBalancerListener($region, $loadblancername, $loadbalanerport, $number){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X DELETE https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DeleteLoadBalancerListeners
+        &LoadBalancerName='.$loadblancername.'
+        &LoadBalancerPorts.member.'.$menber.'='.$loadbalancerport.' \
+      -H "Content-Type: application/json" \
+      -H "X-Auth-Token: '. $Auth['token'] .'" \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
+
 }
