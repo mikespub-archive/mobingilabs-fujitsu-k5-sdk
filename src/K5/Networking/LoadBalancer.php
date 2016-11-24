@@ -57,7 +57,7 @@ class LoadBalancer extends Auth
 
         $Auth = Auth::getAuthToken();
 
-        $data = '&LoadBalancerNames.member.'.$number.'='.$loadbalancername.''
+        $data = '&LoadBalancerNames.member.'.$number.'='.$loadbalancername.'';
 
         $c = '\
         curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancers'.$data.' \
