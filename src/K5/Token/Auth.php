@@ -12,12 +12,13 @@ class Auth
     public $contract;
     public $global;
 
-
-    public function __construct($username, $password, $contract, $global = false) {
+    // if client side stored $token_passed is passed in, we just return it without making the request
+    public function __construct($username, $password, $contract, $global = false, $token_passed = false) {
         $this->useranme = $username;
         $this->password = $password;
         $this->contract = $contract;
         $this->global = $global;
+        $this->token_passed = $token_passed;
     }
 
 
@@ -43,6 +44,9 @@ class Auth
     public function getAuthToken()
     {
 
+        if($token_passed){
+            return $token_passed;
+        }
 
         $this->global ? $gls = 'gls.' : $gls = '';
 
