@@ -53,16 +53,15 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function getLoadBalancerDetail($region, $loadbalancername, $number){
+    public function getLoadBalancerDetail($region, $data){
 
         $Auth = Auth::getAuthToken();
 
-        $data = '&LoadBalancerNames.member.'.$number.'='.$loadbalancername.'';
-
         $c = '\
-        curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancers'.$data.' \
+        curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancers \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
         ';
 
         $respond = exec($c);
