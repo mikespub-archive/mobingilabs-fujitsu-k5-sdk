@@ -126,7 +126,7 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function createLoadBalancerListener($region, $loadbalancername, $subnet, $number){
+    public function createLoadBalancerListener($region, $loadbalancername, $protocol, $loadbalancerport, $instaneport, $instanceprotocol, $sslcertificateid, $number){
 
         $Auth = Auth::getAuthToken();
 
@@ -273,7 +273,7 @@ class LoadBalancer extends Auth
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DetachLoadBalancerFromSubnets
+        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DetachLoadBalancerFromSubnets
         &LoadBalancerName='.$loadbalancername.'
         &Subnets.member.'.$number.'=MySubnet-'.$subnet.' \
       -H "Content-Type: application/json" \
@@ -379,7 +379,7 @@ class LoadBalancer extends Auth
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X PUT https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=SetLoadBalancerListenerSSLCertificate
+        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=SetLoadBalancerListenerSSLCertificate
         &LoadBalancerName='.$loadbalancername.'
         &SSLCertificateId='.$sslcertificateid.'
         &LoadBalancerPort='.$loadbalancerport.' \
