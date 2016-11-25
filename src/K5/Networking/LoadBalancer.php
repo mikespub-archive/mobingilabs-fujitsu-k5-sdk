@@ -14,7 +14,6 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerNames.member.N
      *
      * @region specific
      *
@@ -45,7 +44,7 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerNames.member.N
+     * @param $data
      *
      * @region specific
      *
@@ -56,6 +55,12 @@ class LoadBalancer extends Auth
     public function getLoadBalancerDetail($region, $data){
 
         $Auth = Auth::getAuthToken();
+
+        //sample $data structure
+        // $data = array(
+        //         'LoadBalancerNames.member.1' => ''
+        // );
+        // $data = json_encode($data, JSON_HEX_QUOT);
 
         $c = '\
         curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancers \
@@ -78,8 +83,7 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName require
-     * @param $subnet               Subnets.member.N require
+     * @param $data
      *
      * @region specific
      *
@@ -112,12 +116,7 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName require
-     * @param $Protocol             http require
-     * @param $LoadBalancerPort     80 require
-     * @param $InstancePort         80 require
-     * @param $InstanceProtocol     http  require
-     * @param $SSLCertificateId     SSLCertificateId require
+     * @param $data
      *
      * @region specific
      *
@@ -125,20 +124,15 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function createLoadBalancerListener($region, $loadbalancername, $protocol, $loadbalancerport, $instaneport, $instanceprotocol, $sslcertificateid, $number){
+    public function createLoadBalancerListener($region, $data){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=CreateLoadBalancerListeners
-        &Listeners.member.'.$number.'.LoadBalancerName='.$loadbalancername.'
-        &Listeners.member.'.$number.'.Protocol='.$protocol.'
-        &Listeners.member.'.$number.'.LoadBalancerPort='.$loadbalancerport.'
-        &Listeners.member.'.$number.'.InstancePort='.$instaneport.'
-        &Listeners.member.'.$number.'.InstanceProtocol='.$instanceprotocol.'
-        &Listeners.member.'.$number.'.SSLCertificateId='.$sslcertificateid.' \
+        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=CreateLoadBalancerListeners \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
         ';
 
         $respond = exec($c);
@@ -155,7 +149,7 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName require
+     * @param $data
      *
      * @region specific
      *
@@ -163,15 +157,15 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function deleteLoadBalancer($region, $loadbalancername){
+    public function deleteLoadBalancer($region, $data){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X DELETE https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DeleteLoadBalancer
-        &LoadBalancerName='.$loadbalancername.' \
+        curl -X DELETE https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DeleteLoadBalancer \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
         ';
 
         $respond = exec($c);
@@ -188,8 +182,7 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName require
-     * @param $LoadBalancerPort     LoadBalancerPort require
+     * @param $data
      *
      * @region specific
      *
@@ -197,16 +190,15 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function deleteLoadBalancerListener($region, $loadbalancername, $loadbalanerport, $number){
+    public function deleteLoadBalancerListener($region, $data){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X DELETE https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DeleteLoadBalancerListeners
-        &LoadBalancerName='.$loadbalancername.'
-        &LoadBalancerPorts.member.'.$menber.'='.$loadbalancerport.' \
+        curl -X DELETE https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DeleteLoadBalancerListeners \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
         ';
 
         $respond = exec($c);
@@ -223,8 +215,7 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName require
-     * @param $instanceid           InstanceId require
+     * @param $data
      *
      * @region specific
      *
@@ -232,16 +223,15 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function describeLoadBalancerAttribute($region, $loadbalancername, $instanceid, $number){
+    public function describeLoadBalancerAttribute($region, $data){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancerAttributes
-        &LoadBalancerName='.$loadbalancername.'
-        &Instances.member.'.$number.'.InstanceId='.$instanceid.' \
+        curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancerAttributes \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
         ';
 
         $respond = exec($c);
@@ -258,8 +248,7 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName requred
-     * @param $subnet               Subnets.member.x requred
+     * @param $data
      *
      * @region specific
      *
@@ -267,16 +256,15 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function detachLoadBalancerFromSubnet($region, $loadbalancername, $subnet, $number){
+    public function detachLoadBalancerFromSubnet($region, $data){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DetachLoadBalancerFromSubnets
-        &LoadBalancerName='.$loadbalancername.'
-        &Subnets.member.'.$number.'=MySubnet-'.$subnet.' \
+        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DetachLoadBalancerFromSubnets \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
         ';
 
         $respond = exec($c);
@@ -293,8 +281,7 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName require
-     * @param $idletimeout          IdleTimeout require
+     * @param $data
      *
      * @region specific
      *
@@ -302,16 +289,15 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function modifyLoadBalancerAttribute($region, $loadbalancername, $idletimeout){
+    public function modifyLoadBalancerAttribute($region, $data){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X PUT https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=ModifyLoadBalancerAttributes
-        &LoadBalancerName='.$loadbalancername.'
-        &LoadBalancerAttributes.ConnectionSettings.IdleTimeout='.$idletimeout.' \
+        curl -X PUT https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=ModifyLoadBalancerAttributes \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
         ';
 
         $respond = exec($c);
@@ -328,8 +314,7 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName require
-     * @param $instanceid           InstanceId require
+     * @param $data
      *
      * @region specific
      *
@@ -337,16 +322,15 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function registerInstancesWithLoadBalancer($region, $loadbalancername, $instanceid, $number){
+    public function registerInstancesWithLoadBalancer($region, $data){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=RegisterInstancesWithLoadBalancer
-        &LoadBalancerName='.$loadbalancername.'
-        &Instances.member.'.$number.'.InstanceId='.$instanceid.' \
+        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=RegisterInstancesWithLoadBalancer \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
         ';
 
         $respond = exec($c);
@@ -363,9 +347,7 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName require
-     * @param $sslcertificateid     SSLCertificateId require
-     * @param $loadbalancerport     LoadBalancerPort require
+     * @param $data
      *
      * @region specific
      *
@@ -373,17 +355,15 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function setLoadBalancerListenerSSLCertificate($region, $loadbalancername, $sslcertificateid, $loadbalancerport){
+    public function setLoadBalancerListenerSSLCertificate($region, $data){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=SetLoadBalancerListenerSSLCertificate
-        &LoadBalancerName='.$loadbalancername.'
-        &SSLCertificateId='.$sslcertificateid.'
-        &LoadBalancerPort='.$loadbalancerport.' \
+        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=SetLoadBalancerListenerSSLCertificate \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
         ';
 
         $respond = exec($c);
@@ -400,9 +380,7 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $loadbalanername      LoadBalancerName require
-     * @param $policynames          PolicyNames require
-     * @param $loadbalancerport     LoadBalancerPort require
+     * @param $data
      *
      * @region specific
      *
@@ -410,17 +388,15 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function setLoadBalancerPoliciesOfListener($region, $loadbalancername, $policynames, $loadbalancerport, $number){
+    public function setLoadBalancerPoliciesOfListener($region, $data){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X PUT https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=SetLoadBalancerPoliciesOfListener
-        &LoadBalancerName='.$loadbalancername.'
-        &PolicyNames.member.'.$number.'='.$policynames.'
-        &LoadBalancerPort='.$loadbalancerport.' \
+        curl -X PUT https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=SetLoadBalancerPoliciesOfListener \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
         ';
 
         $respond = exec($c);
