@@ -44,7 +44,8 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $data
+     * @param $number
+     * @param $loadbalancername
      *
      * @region specific
      *
@@ -52,7 +53,7 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function getLoadBalancerDetail($region, $data){
+    public function getLoadBalancerDetail($region, $number, $loadbalancername){
 
         $Auth = Auth::getAuthToken();
 
@@ -63,10 +64,9 @@ class LoadBalancer extends Auth
         // $data = json_encode($data, JSON_HEX_QUOT);
 
         $c = '\
-        curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancers \
+        curl -X GET "https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancers&LoadBalancerNames.member.'.$number.'='.$loadbalancername.'" \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
-        -d \''. $data .'\' \
         ';
 
         $respond = exec($c);
@@ -215,7 +215,7 @@ class LoadBalancer extends Auth
      *
      * @param $token                Token used for HTTP request header authentication
      * @param $region               Specify region
-     * @param $data
+     * @param $loadbalancername
      *
      * @region specific
      *
@@ -223,15 +223,14 @@ class LoadBalancer extends Auth
      *
      * @return string
      */
-    public function describeLoadBalancerAttribute($region, $data){
+    public function describeLoadBalancerAttribute($region, $loadbalancername){
 
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X GET https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancerAttributes \
+        curl -X GET "https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=DescribeLoadBalancerAttributes&LoadBalancerName=' .$loadbalancername. '" \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
-        -d \''. $data .'\' \
         ';
 
         $respond = exec($c);
@@ -294,7 +293,7 @@ class LoadBalancer extends Auth
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X PUT https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=ModifyLoadBalancerAttributes \
+        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=ModifyLoadBalancerAttributes \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
         -d \''. $data .'\' \
