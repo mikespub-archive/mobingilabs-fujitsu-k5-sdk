@@ -392,7 +392,7 @@ class LoadBalancer extends Auth
         $Auth = Auth::getAuthToken();
 
         $c = '\
-        curl -X PUT https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=SetLoadBalancerPoliciesOfListener \
+        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=SetLoadBalancerPoliciesOfListener \
       -H "Content-Type: application/json" \
       -H "X-Auth-Token: '. $Auth['token'] .'" \
         -d \''. $data .'\' \
