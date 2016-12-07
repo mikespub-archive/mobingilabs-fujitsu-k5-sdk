@@ -405,4 +405,70 @@ class LoadBalancer extends Auth
     }
 
 
+    /**
+     * Attach LoadBalancerToSubnets K5 API
+     *
+     *https://loadbalancing.ja-east-1.cloud.global.fujitsu.com/?Action=AttachLoadBalancerToSubnets&Subnets.member.1=subnet-3561b05e&LoadBalancerName=MyLB01
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $data
+     *
+     * @region specific
+     *
+     * @\K5\Networking\LoadBalancer\attachLoadBalancerToSubnets()
+     *
+     * @return string
+     */
+    public function attachLoadBalancerToSubnets($region, $data){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=AttachLoadBalancerToSubnets \
+      -H "Content-Type: application/json" \
+      -H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
+
+    /**
+     * Create LBCookieStickinessPolicy K5 API
+     *
+     *https://loadbalancing.(リージョン名).cloud.global.fujitsu.com/?Action=CreateLBCookieStickinessPolicy&LoadBalancerName=MyLB01&PolicyName=MyLoadBalancerCookiePolicy&CookieExpirationPeriod=60
+     *
+     * @param $token                Token used for HTTP request header authentication
+     * @param $region               Specify region
+     * @param $data
+     *
+     * @region specific
+     *
+     * @\K5\Networking\LoadBalancer\createLBCookieStickinessPolicy()
+     *
+     * @return string
+     */
+    public function createLBCookieStickinessPolicy($region, $data){
+
+        $Auth = Auth::getAuthToken();
+
+        $c = '\
+        curl -X POST https://loadbalancing.' .$region. '.cloud.global.fujitsu.com/?Action=CreateLBCookieStickinessPolicy \
+      -H "Content-Type: application/json" \
+      -H "X-Auth-Token: '. $Auth['token'] .'" \
+        -d \''. $data .'\' \
+        ';
+
+        $respond = exec($c);
+
+        return $respond;
+
+    }
+
+
 }
