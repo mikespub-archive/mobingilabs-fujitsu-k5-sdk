@@ -65,7 +65,7 @@ class Auth
                       "domain": {
                         "name": "' .$this->contract. '"
                       },
-                      "name": "' .$this->useranme. '",
+                      "name": "' .$this->username. '",
                       "password": "' .$this->password. '"
                     }
                   }
