@@ -14,7 +14,7 @@ class Auth
 
     // if client side stored $token_passed is passed in, we just return it without making the request
     public function __construct($username, $password, $contract, $global = false, $token_passed = false) {
-        $this->useranme = $username;
+        $this->username = $username;
         $this->password = $password;
         $this->contract = $contract;
         $this->global = $global;
