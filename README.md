@@ -1,6 +1,8 @@
 # k5-php-sdk
 A PHP SDK Library for Fujitsu K5 Cloud http://jp.fujitsu.com/solutions/cloud/k5/index.html
 
+An online API documentation can be found [here](https://docs.mobingi.com/official/fujitsu-api/v2)
+
 
 __This project is still under development.__
 
