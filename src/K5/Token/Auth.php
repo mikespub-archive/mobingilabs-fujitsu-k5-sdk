@@ -10,14 +10,14 @@ class Auth
     public $username;
     public $password;
     public $contract;
-    public $global;
+    public $region;
 
     // if client side stored $token_passed is passed in, we just return it without making the request
-    public function __construct($username, $password, $contract, $global = false, $token_passed = false) {
+    public function __construct($username, $password, $contract, $region = '', $token_passed = false) {
         $this->username = $username;
         $this->password = $password;
         $this->contract = $contract;
-        $this->global = $global;
+        $this->region = $region;
         $this->token_passed = $token_passed;
     }
 
@@ -41,19 +41,17 @@ class Auth
      *
      * @return array
      */
-    public function getAuthToken($region = '')
+    public function getAuthToken()
     {
 
         if($token_passed){
             return $token_passed;
         }
 
-        empty($region) ? $gls = '' : $gls = $region . '.';
-
-        $this->global ? $gls = 'gls.' : $gls = '';
+        !empty($this->region) ? $region = $this->region . '.' : $region = '';
 
         $c = '\
-        curl -i -X "POST" "https://identity.'.$gls.'cloud.global.fujitsu.com/v3/auth/tokens" \
+        curl -i -X "POST" "https://identity.'.$region.'cloud.global.fujitsu.com/v3/auth/tokens" \
         	-H "Content-Type: application/json" \
         	-H "Accept: application/json" \
         	-d \'{
