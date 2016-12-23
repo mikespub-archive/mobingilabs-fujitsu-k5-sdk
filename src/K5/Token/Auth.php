@@ -41,12 +41,14 @@ class Auth
      *
      * @return array
      */
-    public function getAuthToken()
+    public function getAuthToken($region = '')
     {
 
         if($token_passed){
             return $token_passed;
         }
+
+        empty($region) ? $gls = '' : $gls = $region . '.';
 
         $this->global ? $gls = 'gls.' : $gls = '';
 
