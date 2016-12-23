@@ -11,14 +11,16 @@ class Auth
     public $password;
     public $contract;
     public $region;
+    public $project;
 
     // if client side stored $token_passed is passed in, we just return it without making the request
-    public function __construct($username, $password, $contract, $region = '', $token_passed = false) {
+    public function __construct($username, $password, $contract, $region = '', $project = '', $token_passed = false) {
         $this->username = $username;
         $this->password = $password;
         $this->contract = $contract;
         $this->region = $region;
         $this->token_passed = $token_passed;
+        $this->project = $project;
     }
 
 
@@ -98,7 +100,12 @@ class Auth
 
         $return = json_decode($return, true);
 
-        $project_id = $this->getProjectId(json_decode($data));
+        if(!empty($this->project)){
+            $project_id = $this->project;
+        }else{
+            $project_id = $this->getProjectId(json_decode($data));
+        }
+
         $domain_id = $this->getDomainId(json_decode($data));
 
         return array(
